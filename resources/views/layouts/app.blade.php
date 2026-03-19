@@ -273,6 +273,28 @@
         });
 
         // Global Login Form Loading State
+        function resetLoginFormLoadingState(form) {
+            if (!form) return;
+
+            const submitBtn = form.querySelector('#submit-btn');
+            const btnText = form.querySelector('#btn-text');
+            const btnIcon = form.querySelector('#btn-icon');
+            const btnSpinner = form.querySelector('#btn-spinner');
+
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+            }
+
+            if (btnText) {
+                btnText.innerText = btnText.dataset.originalText || 'Login as Agent';
+            }
+
+            if (btnIcon) btnIcon.style.display = 'inline-block';
+            if (btnSpinner) btnSpinner.style.display = 'none';
+        }
+
         document.addEventListener('htmx:beforeRequest', function(evt) {
             const form = evt.detail.elt.closest('#login-form');
             if (form) {
@@ -301,21 +323,7 @@
         document.addEventListener('htmx:afterRequest', function(evt) {
             const form = evt.detail.elt.closest('#login-form');
             if (form && evt.detail.xhr.status !== 200) {
-                const submitBtn = form.querySelector('#submit-btn');
-                const btnText = form.querySelector('#btn-text');
-                const btnIcon = form.querySelector('#btn-icon');
-                const btnSpinner = form.querySelector('#btn-spinner');
-
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.style.opacity = '1';
-                    submitBtn.style.cursor = 'pointer';
-                }
-                if (btnText && btnText.dataset.originalText) {
-                    btnText.innerText = btnText.dataset.originalText;
-                }
-                if (btnIcon) btnIcon.style.display = 'inline-block';
-                if (btnSpinner) btnSpinner.style.display = 'none';
+                resetLoginFormLoadingState(form);
             }
         });
 
@@ -336,6 +344,11 @@
             }
             if (btnIcon) btnIcon.style.display = 'none';
             if (btnSpinner) btnSpinner.style.display = 'inline-block';
+        });
+
+        // Restore default state when browser returns to this page from history/cache.
+        window.addEventListener('pageshow', function() {
+            document.querySelectorAll('#login-form').forEach(resetLoginFormLoadingState);
         });
 
         // Ensure loader is hidden on load
@@ -369,6 +382,7 @@
 
         document.addEventListener('htmx:historyRestore', function() {
             $('.loader-mask').hide();
+            document.querySelectorAll('#login-form').forEach(resetLoginFormLoadingState);
         });
 
         window.addEventListener('popstate', function() {
