@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Specific CSS</title>
+    <link rel="stylesheet" id="browser-specific-stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css">
+    <script>
+        function loadBrowserSpecificCSS() {
+            var stylesheet = document.getElementById('browser-specific-stylesheet');
+            if (navigator.userAgent.indexOf('Chrome') != -1) {
+                stylesheet.href = 'chrome.css';
+            } else if (navigator.userAgent.indexOf('Firefox') != -1) {
+                stylesheet.href = 'firefox.css';
+            } else {
+                stylesheet.href = 'default.css'; // Fallback for other browsers
+            }
+        }
+
+        window.onload = loadBrowserSpecificCSS;
+    </script>
+</head>
+<body>
+    <div class="example">Hello, World!</div>
+</body>
+</html>

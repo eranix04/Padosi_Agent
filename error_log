@@ -1,0 +1,10 @@
+[22-Nov-2025 06:09:38 UTC] PHP Warning:  require(/home/x6qiys3fhpqy/public_html/staging/../laravel_app/vendor/autoload.php): Failed to open stream: No such file or directory in /home/x6qiys3fhpqy/public_html/staging/index.php on line 15
+[22-Nov-2025 06:09:38 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/x6qiys3fhpqy/public_html/staging/../laravel_app/vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/x6qiys3fhpqy/public_html/staging/index.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/x6qiys3fhpqy/public_html/staging/index.php on line 15
+[10-Dec-2025 09:03:58 UTC] PHP Deprecated:  Using ${expr} (variable variables) in strings is deprecated, use {${expr}} instead in /home/x6qiys3fhpqy/public_html/staging/routes/web.php on line 125
+[10-Dec-2025 09:03:58 UTC] PHP Deprecated:  Using ${var} in strings is deprecated, use {$var} instead in /home/x6qiys3fhpqy/public_html/staging/routes/web.php on line 149
+[10-Dec-2025 09:03:58 UTC] PHP Deprecated:  Using ${expr} (variable variables) in strings is deprecated, use {${expr}} instead in /home/x6qiys3fhpqy/public_html/staging/routes/web.php on line 150
+[03-Feb-2026 09:18:18 UTC] PHP Warning:  symlink(): File exists in /home/x6qiys3fhpqy/public_html/staging/link.php on line 4
+[03-Feb-2026 09:20:10 UTC] PHP Warning:  symlink(): File exists in /home/x6qiys3fhpqy/public_html/staging/link.php on line 4
