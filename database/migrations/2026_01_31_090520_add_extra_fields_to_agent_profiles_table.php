@@ -11,10 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('agent_profiles')) {
+            return;
+        }
+
         Schema::table('agent_profiles', function (Blueprint $table) {
-            $table->string('software_name')->nullable()->after('license_number');
-            $table->json('portfolio_breakdown')->nullable()->after('software_name');
-            $table->json('desired_services')->nullable()->after('portfolio_breakdown');
+            if (!Schema::hasColumn('agent_profiles', 'software_name')) {
+                $table->string('software_name')->nullable()->after('license_number');
+            }
+            if (!Schema::hasColumn('agent_profiles', 'portfolio_breakdown')) {
+                $table->json('portfolio_breakdown')->nullable()->after('software_name');
+            }
+            if (!Schema::hasColumn('agent_profiles', 'desired_services')) {
+                $table->json('desired_services')->nullable()->after('portfolio_breakdown');
+            }
         });
     }
 
@@ -23,8 +33,20 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasTable('agent_profiles')) {
+            return;
+        }
+
         Schema::table('agent_profiles', function (Blueprint $table) {
-            $table->dropColumn(['software_name', 'portfolio_breakdown', 'desired_services']);
+            if (Schema::hasColumn('agent_profiles', 'software_name')) {
+                $table->dropColumn('software_name');
+            }
+            if (Schema::hasColumn('agent_profiles', 'portfolio_breakdown')) {
+                $table->dropColumn('portfolio_breakdown');
+            }
+            if (Schema::hasColumn('agent_profiles', 'desired_services')) {
+                $table->dropColumn('desired_services');
+            }
         });
     }
 };

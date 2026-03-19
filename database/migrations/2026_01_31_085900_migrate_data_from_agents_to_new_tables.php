@@ -13,6 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('agents')) {
+            return;
+        }
+
+        if (!Schema::hasTable('agent_subscriptions') || !Schema::hasTable('agent_profiles') || !Schema::hasTable('users')) {
+            return;
+        }
+
         $agents = DB::table('agents')->get();
 
         foreach ($agents as $agent) {

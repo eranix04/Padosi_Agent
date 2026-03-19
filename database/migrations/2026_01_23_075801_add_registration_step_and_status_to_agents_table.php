@@ -11,9 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('agents')) {
+            return;
+        }
+
         Schema::table('agents', function (Blueprint $table) {
-            $table->integer('registration_step')->default(1)->after('mobile');
-            $table->string('status')->default('incomplete')->after('registration_step');
+            if (!Schema::hasColumn('agents', 'registration_step')) {
+                $table->integer('registration_step')->default(1)->after('mobile');
+            }
+
+            if (!Schema::hasColumn('agents', 'status')) {
+                $table->string('status')->default('incomplete')->after('registration_step');
+            }
         });
     }
 
@@ -22,8 +31,18 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasTable('agents')) {
+            return;
+        }
+
         Schema::table('agents', function (Blueprint $table) {
-            $table->dropColumn(['registration_step', 'status']);
+            if (Schema::hasColumn('agents', 'registration_step')) {
+                $table->dropColumn('registration_step');
+            }
+
+            if (Schema::hasColumn('agents', 'status')) {
+                $table->dropColumn('status');
+            }
         });
     }
 };

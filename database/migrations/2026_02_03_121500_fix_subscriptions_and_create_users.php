@@ -14,6 +14,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('agents')) {
+            return;
+        }
+
+        if (!Schema::hasTable('agent_subscriptions') || !Schema::hasTable('users')) {
+            return;
+        }
+
         // 1. Check if the 'payment_status' column still exists in the 'agents' table
         // We accept that it might be gone if the cleanup migration ran.
         $hasSourceColumn = Schema::hasColumn('agents', 'payment_status');

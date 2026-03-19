@@ -11,6 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('agent_product_expertise')) {
+            return;
+        }
+
+        if (!Schema::hasColumn('agent_product_expertise', 'segment_type') || !Schema::hasColumn('agent_product_expertise', 'product_name')) {
+            return;
+        }
+
         Schema::table('agent_product_expertise', function (Blueprint $table) {
             // First, shorten the columns to ensure the index fits within MySQL's 1000-byte limit for UTF8MB4
             $table->string('segment_type', 50)->change();
@@ -29,6 +37,14 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasTable('agent_product_expertise')) {
+            return;
+        }
+
+        if (!Schema::hasColumn('agent_product_expertise', 'segment_type') || !Schema::hasColumn('agent_product_expertise', 'product_name')) {
+            return;
+        }
+
         Schema::table('agent_product_expertise', function (Blueprint $table) {
             $table->dropIndex(['product_name']);
             $table->dropIndex(['segment_type', 'product_name']);

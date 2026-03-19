@@ -11,8 +11,33 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('agents')) {
+            return;
+        }
+
+        $columnsToDrop = [
+            'razorpay_order_id',
+            'razorpay_payment_id',
+            'razorpay_signature',
+            'payment_status',
+            'selected_plan',
+            'registration_amount',
+            'registration_type',
+            'portfolio_breakdown',
+            'desired_services',
+            'software_name',
+            'license_number',
+            'pan_number',
+        ];
+
+        $existingColumns = array_values(array_filter($columnsToDrop, fn ($column) => Schema::hasColumn('agents', $column)));
+
+        if (empty($existingColumns)) {
+            return;
+        }
+
         Schema::table('agents', function (Blueprint $table) {
-            $table->dropColumn([
+            $columnsToDrop = [
                 'razorpay_order_id',
                 'razorpay_payment_id',
                 'razorpay_signature',
@@ -24,8 +49,14 @@ return new class extends Migration
                 'desired_services',
                 'software_name',
                 'license_number',
-                'pan_number'
-            ]);
+                'pan_number',
+            ];
+
+            $existingColumns = array_values(array_filter($columnsToDrop, fn ($column) => Schema::hasColumn('agents', $column)));
+
+            if (!empty($existingColumns)) {
+                $table->dropColumn($existingColumns);
+            }
         });
     }
 
@@ -34,19 +65,47 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasTable('agents')) {
+            return;
+        }
+
         Schema::table('agents', function (Blueprint $table) {
-            $table->string('razorpay_order_id')->nullable();
-            $table->string('razorpay_payment_id')->nullable();
-            $table->string('razorpay_signature')->nullable();
-            $table->string('payment_status')->nullable();
-            $table->json('selected_plan')->nullable();
-            $table->decimal('registration_amount', 10, 2)->nullable();
-            $table->string('registration_type')->nullable();
-            $table->json('portfolio_breakdown')->nullable();
-            $table->json('desired_services')->nullable();
-            $table->string('software_name')->nullable();
-            $table->string('license_number')->nullable();
-            $table->string('pan_number')->nullable();
+            if (!Schema::hasColumn('agents', 'razorpay_order_id')) {
+                $table->string('razorpay_order_id')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'razorpay_payment_id')) {
+                $table->string('razorpay_payment_id')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'razorpay_signature')) {
+                $table->string('razorpay_signature')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'payment_status')) {
+                $table->string('payment_status')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'selected_plan')) {
+                $table->json('selected_plan')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'registration_amount')) {
+                $table->decimal('registration_amount', 10, 2)->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'registration_type')) {
+                $table->string('registration_type')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'portfolio_breakdown')) {
+                $table->json('portfolio_breakdown')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'desired_services')) {
+                $table->json('desired_services')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'software_name')) {
+                $table->string('software_name')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'license_number')) {
+                $table->string('license_number')->nullable();
+            }
+            if (!Schema::hasColumn('agents', 'pan_number')) {
+                $table->string('pan_number')->nullable();
+            }
         });
     }
 };

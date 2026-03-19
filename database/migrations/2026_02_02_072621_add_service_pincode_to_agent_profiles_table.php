@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('agent_profiles') || Schema::hasColumn('agent_profiles', 'service_pincodes')) {
+            return;
+        }
+
         Schema::table('agent_profiles', function (Blueprint $table) {
             $table->json('service_pincodes')->nullable()->after('office_address');
         });
@@ -21,6 +25,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasTable('agent_profiles') || !Schema::hasColumn('agent_profiles', 'service_pincodes')) {
+            return;
+        }
+
         Schema::table('agent_profiles', function (Blueprint $table) {
             $table->dropColumn('service_pincodes');
         });
