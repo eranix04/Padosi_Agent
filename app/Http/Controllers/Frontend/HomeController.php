@@ -5,15 +5,11 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\AgentReview;
 use Illuminate\Http\Request;
-<<<<<<< Updated upstream
-use Illuminate\Support\Facades\Schema;
-use Throwable;
-=======
 use Illuminate\Database\QueryException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
->>>>>>> Stashed changes
+use Throwable;
 
 class HomeController extends Controller
 {
