@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="sub_banner position-relative">
-    @include('layouts.header')    
+    @include('layouts.header')
 </div>
 
     <section class="benefit-con find-agents-con position-relative">
@@ -86,7 +86,7 @@
                                             </span>
                                             <span class="btn-text">Apply</span>
                                         </button>
-                                        <a href="{{ route('find.agents') }}" 
+                                        <a href="{{ route('find.agents') }}"
                                            class="clear-filter-btn no-interceptor text-decoration-none"
                                            hx-get="{{ route('find.agents') }}"
                                            hx-target=".find-agents-list"
@@ -100,22 +100,11 @@
 
                         <div class="find-agents-list">
                             <!-- Title -->
-                            @if(!(request('ServiceType') == 'Claim Assistance' && !request()->filled('InsuranceCompany')))
                             <div class="find-agents-list-title mb-2">
                                 <h3>{{ $agents->total() }} Insurance Agent{{ $agents->total() != 1 ? 's' : '' }} Available</h3>
                             </div>
-                            @endif
 
-                            @if(request('ServiceType') == 'Claim Assistance' && !request()->filled('InsuranceCompany'))
-                            <div class="no-agents-found p-4" style="background-color: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; margin-top: 20px;">
-                                <h3 style="color: #d9534f; font-size: 20px; font-weight: 600; margin-bottom: 15px;">Complete Required Filters to View Agents</h3>
-                                <p style="font-size: 15px; color: #495057; margin-bottom: 15px;">For Claim Assistance service, please select the following required filters to see matching agents:</p>
-                                <ul style="list-style-type: none; padding-left: 0; margin-bottom: 15px;">
-                                    <li style="font-size: 15px; color: #212529; font-weight: 600;"><i class="fas fa-building text-secondary me-2"></i> Insurance Company</li>
-                                </ul>
-                                <p style="font-size: 13px; color: #6c757d; margin-bottom: 0;">* Complaint Type is optional and can be used to further refine your search</p>
-                            </div>
-                            @elseif($agents->isEmpty())
+                            @if($agents->isEmpty())
                             <!-- No Agents found  -->
                             <div class="no-agents-found">
                                 <h3>No Agents Found</h3>
@@ -132,7 +121,7 @@
                                 <div id="load-more-wrapper" class="w-100">
                                     @if($agents->hasMorePages())
                                     <div class="find-more-agent-btn text-center">
-                                        <a href="{{ $agents->nextPageUrl() }}" 
+                                        <a href="{{ $agents->nextPageUrl() }}"
                                            class="all-btn no-interceptor text-decoration-none position-relative"
                                            hx-get="{{ $agents->nextPageUrl() }}"
                                            hx-target="#load-more-wrapper"
@@ -172,7 +161,7 @@
         <div class="compare-info d-none d-sm-block">
             <span id="compare-count">0</span>/3 Agents selected
         </div>
-        
+
         <div class="compare-selected-agents" id="compare-selected-agents">
             <!-- Selected agents thumbs will appear here -->
         </div>
@@ -396,7 +385,7 @@
     .find-agents-con {
         min-height: 800px;
     }
-    
+
     .find-agents-content {
         align-items: flex-start;
     }
@@ -834,7 +823,7 @@
 
         function updateInsuranceTypes() {
             const serviceType = serviceTypeSelect.val();
-            
+
             // Initial hide - will be shown based on conditions later
             companyContainer.hide();
             complaintContainer.hide();
@@ -846,10 +835,10 @@
 
             if (serviceType === 'Policy Review') {
                 insuranceTypeLabel.text('Insurance Types');
-                
+
                 let html = renderSelectedTags();
                 const displayCount = selectedItems.length > 0 ? `${selectedItems.length} selected` : 'Select Insurance Types';
-                
+
                 html += `
                     <div class="custom-multiselect-container">
                         <div class="multiselect-trigger" id="InsuranceType" tabindex="0">
@@ -858,7 +847,7 @@
                         </div>
                         <div class="multiselect-dropdown">
                 `;
-                
+
                 policyReviewOptions.forEach(opt => {
                     const isChecked = selectedItems.includes(opt) ? 'checked' : '';
                     html += `
@@ -869,16 +858,16 @@
                         </label>
                     `;
                 });
-                
+
                 html += `</div></div>`;
                 insuranceTypeField.html(html);
             } else {
                 insuranceTypeLabel.text('Insurance Type');
                 // selectedItems = []; // Keep selected items for initial load, cleared on change
-                
+
                 let html = `<select class="selectbox" name="InsuranceType" id="InsuranceType">
                     <option value="">All Insurance Types</option>`;
-                
+
                 const options = insuranceOptions[serviceType] || ['Life Insurance', 'Health Insurance', 'Motor Insurance', 'Home Insurance', 'Travel Insurance'];
                 const currentlySelected = {!! json_encode(request('InsuranceType')) !!};
 
@@ -919,7 +908,7 @@
             } else {
                 selectedItems = selectedItems.filter(i => i !== val);
             }
-            
+
             // Update Text
             const countText = selectedItems.length > 0 ? `${selectedItems.length} selected` : 'Select Insurance Types';
             $('.custom-multiselect-container .count-text').text(countText);
@@ -937,14 +926,14 @@
         $(document).on('click', '.remove-tag', function() {
             const val = $(this).data('val');
             selectedItems = selectedItems.filter(i => i !== val);
-            
+
             // Uncheck the checkbox
             $(`.multiselect-option input[value="${val}"]`).prop('checked', false);
-            
+
             // Update Text
             const countText = selectedItems.length > 0 ? `${selectedItems.length} selected` : 'Select Insurance Types';
             $('.custom-multiselect-container .count-text').text(countText);
-            
+
             // Update Tags
             let tagsContainer = insuranceTypeField.find('.selected-tags-container');
             tagsContainer.replaceWith(renderSelectedTags());
@@ -955,7 +944,7 @@
             // Reset dependent fields to clear stray filter data
             $('#InsuranceCompany').val('');
             $('#ComplaintType').val('');
-            
+
             updateInsuranceTypes();
             updateInsuranceCompanyDropdown();
         });
@@ -969,7 +958,7 @@
             $('#InsuranceCompany').val('');
             $('#ComplaintType').val('');
         });
-        
+
         const subProductMapping = {
             'Health Insurance': ['Mediclaim', 'Personal Accident', 'Critical Illness', 'Super Top-up', 'Others'],
             'Life Insurance': ['Term Plan', 'Pension Plan', 'Guaranteed Plan', 'Saving Plan', 'ULIP Plan', 'Others'],
@@ -986,24 +975,24 @@
                 $('#InsuranceCompanyContainer label').text('Insurance Company');
                 const companies = insuranceCompanyMapping[insuranceType];
                 let companyOptions = '<option value="">All Companies</option>';
-                
+
                 companies.forEach(company => {
                     const isSelected = requestedCompany === company ? 'selected' : '';
                     companyOptions += `<option value="${company}" ${isSelected}>${company}</option>`;
                 });
-                
+
                 $('#InsuranceCompany').html(companyOptions);
                 companyContainer.show();
             } else if (serviceType === 'New Policy' && insuranceType && subProductMapping[insuranceType]) {
                 $('#InsuranceCompanyContainer label').text('Sub Product');
                 const products = subProductMapping[insuranceType];
                 let productOptions = '<option value="">All Sub Products</option>';
-                
+
                 products.forEach(product => {
                     const isSelected = requestedCompany === product ? 'selected' : '';
                     productOptions += `<option value="${product}" ${isSelected}>${product}</option>`;
                 });
-                
+
                 $('#InsuranceCompany').html(productOptions);
                 companyContainer.show();
             } else {
@@ -1028,6 +1017,13 @@
         updateInsuranceCompanyDropdown();
 
         @guest
+        const iconFlowFromHome = new URLSearchParams(window.location.search).get('iconFlow') === '1';
+        const detailsCaptured = new URLSearchParams(window.location.search).get('detailsCaptured') === '1';
+
+        if (iconFlowFromHome && detailsCaptured) {
+            return;
+        }
+
         // Auto-show popup for guests
         if (Swal.isVisible() || $('#logout-form').length || $('#userMenu').length) return;
         Swal.fire({
@@ -1039,27 +1035,27 @@
                     </div>
 
                     <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Please share a few details to help us connect you with the right experts.</p>
-                    
+
                     <div class="form-group mb-3">
                         <label style="font-size: 13px; font-weight: 600; color: #475569;">Full Name <span class="text-danger">*</span></label>
                         <input type="text" id="swal-fullname" class="form-control" placeholder="Enter your full name" style="border-radius: 8px; padding: 12px;">
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label style="font-size: 13px; font-weight: 600; color: #475569;">Email Address <span class="text-danger">*</span></label>
                         <input type="email" id="swal-email" class="form-control" placeholder="name@example.com" style="border-radius: 8px; padding: 12px;">
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label style="font-size: 13px; font-weight: 600; color: #475569;">Mobile Number</label>
-                        <input type="text" id="swal-mobile" class="form-control" placeholder="10-digit mobile number" maxlength="10" 
+                        <input type="text" id="swal-mobile" class="form-control" placeholder="10-digit mobile number" maxlength="10"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             style="border-radius: 8px; padding: 12px;">
                     </div>
-                    
+
                     <div class="form-group mb-3">
                         <label style="font-size: 13px; font-weight: 600; color: #475569;">Pincode <span class="text-danger">*</span></label>
-                        <input type="text" id="swal-pincode" class="form-control" placeholder="Where are you looking for an agent?" maxlength="6" 
+                        <input type="text" id="swal-pincode" class="form-control" placeholder="Where are you looking for an agent?" maxlength="6"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             style="border-radius: 8px; padding: 12px;">
                     </div>
@@ -1282,25 +1278,25 @@
                 claimsRow += `<td class="compare-value">${agent.claims}</td>`;
                 settledRow += `<td class="compare-value">${agent.settled}</td>`;
                 clientsRow += `<td class="compare-value">${agent.clients}</td>`;
-                
+
                 // Format segments neatly
-                let segmentsHtml = agent.segments !== 'N/A' 
+                let segmentsHtml = agent.segments !== 'N/A'
                     ? agent.segments.split(',').map(s => {
                         let text = s.trim().replace(/ insurance$/i, '');
                         text = text.charAt(0).toUpperCase() + text.slice(1);
                         if (text.toLowerCase() === 'sme') text = 'SME';
                         return `<span class="badge text-white m-1 shadow-sm" style="background-color: #2b7a70; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 12px;">${text}</span>`;
-                    }).join('') 
+                    }).join('')
                     : agent.segments;
                 segmentsRow += `<td class="compare-value">${segmentsHtml}</td>`;
-                
+
                 locationRow += `<td class="compare-value">${agent.location}</td>`;
-                
+
                 let whatsappNumber = agent.whatsapp;
                 if (whatsappNumber && whatsappNumber.length === 10) {
                     whatsappNumber = '91' + whatsappNumber;
                 }
-                
+
                 actionRow += `
                     <td>
                         <div class="d-flex flex-column mx-auto" style="max-width: 150px;">
@@ -1327,7 +1323,7 @@
             actionRow += '</tr>';
 
             table.append(headerRow + experienceRow + ratingRow + reviewsRow + claimsRow + settledRow + clientsRow + segmentsRow + locationRow + actionRow);
-            
+
             const modalEl = document.getElementById('comparisonModal');
             if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
                 if (bootstrap.Modal.getOrCreateInstance) {
@@ -1344,7 +1340,7 @@
 
         // Initially sync the compare bar
         updateCompareBar();
-        
+
         // Add event listener for htmx afterSettle to re-bind compare logic
         document.body.addEventListener('htmx:afterSettle', function() {
             updateCompareBar();

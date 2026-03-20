@@ -34,11 +34,12 @@
                         {{-- Mobile-only menu items for guests --}}
                         <li class="nav-item d-lg-none">
                             <a class="nav-link" href="{{ url('/find-agents') }}">
-                                <i class="fa-solid fa-search mr-2"></i>Find Agents
+                                <span style="font-weight:700;color:#111111;">Find</span>
+                                <span style="font-weight:700;color:#1f2f6f;">Padosi</span><span style="font-weight:700;color:#1f7a4a;">Agent</span>
                             </a>
                         </li>
                     @endguest
-                    
+
                     @auth
                         {{-- Role-specific mobile menu items --}}
                         @if(auth()->user()->role === 'agent')
@@ -60,7 +61,8 @@
                         </li>
                         <li class="nav-item d-lg-none {{ Request::is('find-agents') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('find.agents') }}">
-                                <i class="fas fa-search mr-2"></i>Find Agents
+                                <span style="font-weight:700;color:#111111;">Find</span>
+                                <span style="font-weight:700;color:#1f2f6f;">Padosi</span><span style="font-weight:700;color:#1f7a4a;">Agent</span>
                             </a>
                         </li>
                         @endif
@@ -78,8 +80,7 @@
                 {{-- Desktop-only header buttons --}}
                 <div class="header-right-btns d-none d-lg-flex align-items-center">
                     @guest
-                        <a class="contact_us text-decoration-none mr-2" href="{{ url('/find-agents') }}">Find Agents<i
-                                class="fa-solid fa-arrow-right"></i></a>
+                        <a class="contact_us text-decoration-none mr-2" href="{{ url('/find-agents') }}" style="background-color:#1f5eb3;color:white;padding:12px 24px;border-radius:8px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:10px;line-height:1;">Find Agents <i class="fa-solid fa-arrow-right"></i></a>
                     @endguest
 
                     @auth
@@ -100,7 +101,8 @@
                                     <i class="fas fa-home mr-2 text-primary"></i>Home
                                 </a>
                                 <a class="dropdown-item py-2" href="{{ route('find.agents') }}">
-                                    <i class="fas fa-search mr-2 text-info"></i>Find Agents
+                                    <span style="font-weight:700;color:#111111;">Find</span>
+                                    <span style="font-weight:700;color:#1f2f6f;">Padosi</span><span style="font-weight:700;color:#1f7a4a;">Agent</span>
                                 </a>
                                 @endif
                                 <div class="dropdown-divider"></div>
@@ -111,7 +113,7 @@
                                     </button>
                                 </form>
                             </div>
-                        </div>                    
+                        </div>
                     @endauth
                 </div>
             </div>

@@ -43,6 +43,7 @@ Route::view('/client-login', 'client-login')->name('client.login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/client/quick-register', [ClientRegistrationController::class, 'quickRegister'])->name('client.quick-register');
+Route::post('/client/auto-login-existing', [ClientRegistrationController::class, 'autoLoginExisting'])->name('client.auto-login-existing');
 
 // Password Reset Routes
 Route::get('/forgot-password', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
@@ -169,7 +170,7 @@ Route::get('/test-webhook-form', function () {
         <p>Testing Order: <b>$orderId</b></p>
         <button onclick='test()'>Test Webhook</button>
         <div id='result'></div>
-        
+
         <script>
         function test() {
             fetch('/razorpay-webhook', {

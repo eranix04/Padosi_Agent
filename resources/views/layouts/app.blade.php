@@ -33,7 +33,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <!-- Core Libraries -->
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -43,7 +43,7 @@
     <script src="{{ asset('js/carousel.js') }}?v={{ time() }}"></script>
 
 
-    
+
     <style>
         .swal2-backdrop-show {
             backdrop-filter: blur(8px) !important;
@@ -56,7 +56,7 @@
             transform: none !important;
             visibility: visible !important;
         }
-        
+
         /* But allow AOS to take over if it's loaded */
         .aos-init [data-aos] {
             opacity: inherit;
@@ -70,7 +70,7 @@
                 padding-top: 100px !important;
             }
         }
-        
+
         /* Mobile banner fixes */
         @media screen and (max-width: 991px) {
             .banner-con .banner_content {
@@ -96,13 +96,13 @@
         .banner-con .owl-carousel .owl-item {
             overflow: hidden !important;
         }
-        
+
         /* Stop bootstrap rows in banner from bleeding with negative margins */
         .banner-con .row[class*="-banner-outer"] {
             margin-left: 0 !important;
             margin-right: 0 !important;
         }
-        
+
         /* Ensure badges are above the slider but not blocking interaction */
         .banner-top-text-block {
             z-index: 10 !important;
@@ -235,7 +235,7 @@
         @stack('styles')
         @yield('content')
         @stack('scripts')
-        
+
         @if(session('login_success') && auth()->check())
             @php
                 $welcomeName = auth()->user()->fullname;
@@ -320,7 +320,7 @@
                     'visibility': 'visible',
                     'display': 'block'
                 });
-                
+
                 // Specifically targeting About page classes that were reported missing
                 $('.service-con, .aboutpage-con, .why-exist-con, .what-we-do-con, .seekers-agents-con, .commitment-con').css({
                     'opacity': '1',
@@ -349,7 +349,7 @@
         $(document).on('click', '.password-toggle-icon, #togglePassword', function() {
             const wrapper = $(this).closest('.password-field-wrapper');
             const passwordField = wrapper.length ? wrapper.find('input') : $('#password');
-            
+
             if (passwordField.length) {
                 const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
                 passwordField.attr('type', type);
@@ -501,10 +501,10 @@
         document.addEventListener('htmx:configRequest', function(evt) {
             const path = evt.detail.path || '';
             const elt = evt.detail.elt;
-            
+
             // Only show global preloader for login-related requests (Agent & Client Login)
             const isLoginRequest = path.includes('login');
-            
+
             if (!isLoginRequest) {
                 return;
             }
@@ -557,6 +557,174 @@
         // Find Agent Interceptor for Guests
         $(function() {
             @guest
+            const iconFlowSubProductMapping = {
+                'Health Insurance': ['Mediclaim', 'Personal Accident', 'Critical Illness', 'Super Top-up', 'Others'],
+                'Life Insurance': ['Term Plan', 'Pension Plan', 'Guaranteed Plan', 'Saving Plan', 'ULIP Plan', 'Others'],
+                'Motor Insurance': ['Private Car', 'Two Wheeler', 'Commercial Vehicle', '3 Wheeler', 'Others'],
+                'SME Insurance': ['Fire', 'Marine/Transport', 'Workmen Compensation', 'GPA/GMC', 'Group Term Insurance', 'Liability', 'Cyber', 'Others']
+            };
+
+            function buildIconFlowPopupHtml(flowType, insuranceType) {
+                const isClaimFlow = flowType === 'claim-assistance';
+
+                let flowSpecificFieldHtml = '';
+
+                if (!isClaimFlow) {
+                    flowSpecificFieldHtml = '';
+                }
+
+                return `
+                    <div class="text-left" style="padding: 0 10px;">
+                        <div id="swal-error-container" class="alert alert-danger d-none" style="font-size: 13px; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: none; background-color: #fef2f2; color: #991b1b;">
+                            <i class="fas fa-exclamation-circle mr-2"></i> <span id="swal-error-message"></span>
+                        </div>
+
+                        <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Please share a few details to help us connect you with the right experts.</p>
+
+                        <div class="form-group mb-3">
+                            <label style="font-size: 13px; font-weight: 600; color: #475569;">Full Name <span class="text-danger">*</span></label>
+                            <input type="text" id="swal-fullname" class="form-control" placeholder="Enter your full name" style="border-radius: 8px; padding: 12px;">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label style="font-size: 13px; font-weight: 600; color: #475569;">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" id="swal-email" class="form-control" placeholder="name@example.com" style="border-radius: 8px; padding: 12px;">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label style="font-size: 13px; font-weight: 600; color: #475569;">Mobile Number</label>
+                            <input type="text" id="swal-mobile" class="form-control" placeholder="10-digit mobile number" maxlength="10"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                style="border-radius: 8px; padding: 12px;">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label style="font-size: 13px; font-weight: 600; color: #475569;">Pincode <span class="text-danger">*</span></label>
+                            <input type="text" id="swal-pincode" class="form-control" placeholder="Where are you looking for an agent?" maxlength="6"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                style="border-radius: 8px; padding: 12px;">
+                        </div>
+
+                        ${flowSpecificFieldHtml}
+                    </div>
+                `;
+            }
+
+            $(document).on('click', '.js-icon-agent-flow', function(e) {
+                if ($('#logout-form').length || $('#userMenu').length) {
+                    return;
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                const $link = $(this);
+                const flowType = $link.data('flow-type');
+                const serviceType = $link.data('service-type');
+                const insuranceType = $link.data('insurance-type');
+                const isClaimFlow = flowType === 'claim-assistance';
+
+                Swal.fire({
+                    title: '<h3 style="color: #0d9488; margin-top: 10px;">Find Best Agents Nearby</h3>',
+                    html: buildIconFlowPopupHtml(flowType, insuranceType),
+                    showCancelButton: true,
+                    confirmButtonText: 'Show Agents',
+                    confirmButtonColor: '#0d9488',
+                    cancelButtonText: 'Cancel',
+                    padding: '2rem',
+                    width: '450px',
+                    preConfirm: () => {
+                        const fullname = $('#swal-fullname').val().trim();
+                        const email = $('#swal-email').val().trim();
+                        const mobile = $('#swal-mobile').val().trim();
+                        const pincode = $('#swal-pincode').val().trim();
+
+                        const showError = (msg) => {
+                            $('#swal-error-message').text(msg);
+                            $('#swal-error-container').removeClass('d-none').hide().fadeIn();
+                            setTimeout(() => {
+                                $('#swal-error-container').fadeOut(() => {
+                                    $('#swal-error-container').addClass('d-none');
+                                });
+                            }, 3000);
+                        };
+
+                        $('#swal-error-container').addClass('d-none');
+
+                        if (!fullname) { showError('Full Name is required'); return false; }
+                        if (!email) { showError('Email Address is required'); return false; }
+                        if (!/^\S+@\S+\.\S+$/.test(email)) { showError('Please enter a valid email address'); return false; }
+                        if (!pincode) { showError('Pincode is required'); return false; }
+                        if (pincode.length < 6) { showError('Please enter a valid 6-digit pincode'); return false; }
+
+                        return { fullname, email, mobile, pincode };
+                    },
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    backdrop: `rgba(0,0,0,0.6)`
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const { fullname, email, mobile, pincode } = result.value;
+                        sessionStorage.setItem('iconAgentFlowUserDetails', JSON.stringify({ fullname, email, mobile, pincode }));
+
+                        const query = new URLSearchParams({
+                            ServiceType: serviceType,
+                            InsuranceType: insuranceType,
+                            iconFlow: '1',
+                            detailsCaptured: '1'
+                        });
+
+                        const redirectUrl = `{{ url('/find-agents') }}?${query.toString()}`;
+
+                        Swal.fire({
+                            title: 'Searching Agent...',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        $.ajax({
+                            url: "{{ route('client.auto-login-existing') }}",
+                            type: "POST",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                email: email,
+                                mobile: mobile
+                            },
+                            success: function(response) {
+                                // Login successful or user doesn't exist - proceed to agent listing either way
+                                setTimeout(() => {
+                                    window.location.href = redirectUrl;
+                                }, 300);
+                            },
+                            error: function(xhr) {
+                                // Even on error, proceed to agent listing with form data captured
+                                setTimeout(() => {
+                                    window.location.href = redirectUrl;
+                                }, 300);
+                            },
+                            complete: function() {
+                                // Ensure redirect happens after AJAX completes
+                                setTimeout(() => {
+                                    if (!window.location.pathname.includes('find-agents')) {
+                                        window.location.href = redirectUrl;
+                                    }
+                                }, 600);
+                            }
+                        });
+
+                        return;
+                    }
+
+                    if (result.dismiss === Swal.DismissReason.cancel) {
+                        window.location.href = "{{ url('/') }}";
+                    }
+                });
+            });
+
             $(document).on('click', 'a[href*="find-agents"], .find-agent-btn', function(e) {
                 // If we are already on the find-agents page, do not intercept
                 if (window.location.pathname.includes('find-agents')) {
@@ -572,7 +740,7 @@
                 if ($(this).hasClass('no-interceptor') || $(this).closest('.no-interceptor').length) {
                     return;
                 }
-                
+
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -585,27 +753,27 @@
                             </div>
 
                             <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Please share a few details to help us connect you with the right experts.</p>
-                            
+
                             <div class="form-group mb-3">
                                 <label style="font-size: 13px; font-weight: 600; color: #475569;">Full Name <span class="text-danger">*</span></label>
                                 <input type="text" id="swal-fullname" class="form-control" placeholder="Enter your full name" style="border-radius: 8px; padding: 12px;">
                             </div>
-                            
+
                             <div class="form-group mb-3">
                                 <label style="font-size: 13px; font-weight: 600; color: #475569;">Email Address <span class="text-danger">*</span></label>
                                 <input type="email" id="swal-email" class="form-control" placeholder="name@example.com" style="border-radius: 8px; padding: 12px;">
                             </div>
-                            
+
                             <div class="form-group mb-3">
                                 <label style="font-size: 13px; font-weight: 600; color: #475569;">Mobile Number</label>
-                                <input type="text" id="swal-mobile" class="form-control" placeholder="10-digit mobile number" maxlength="10" 
+                                <input type="text" id="swal-mobile" class="form-control" placeholder="10-digit mobile number" maxlength="10"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                     style="border-radius: 8px; padding: 12px;">
                             </div>
-                            
+
                             <div class="form-group mb-3">
                                 <label style="font-size: 13px; font-weight: 600; color: #475569;">Pincode <span class="text-danger">*</span></label>
-                                <input type="text" id="swal-pincode" class="form-control" placeholder="Where are you looking for an agent?" maxlength="6" 
+                                <input type="text" id="swal-pincode" class="form-control" placeholder="Where are you looking for an agent?" maxlength="6"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                     style="border-radius: 8px; padding: 12px;">
                             </div>
@@ -687,7 +855,7 @@
                         });
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         // Redirect to home page when user clicks Cancel
-                        htmx.ajax('GET', "{{ url('/') }}", {target: '#app-content', select: '#app-content'});
+                        window.location.href = "{{ url('/') }}";
                     }
                 });
             });
@@ -709,7 +877,7 @@
 
         function toggleFavoriteAgent(btn, agentId) {
             const isAuth = @json(auth()->check());
-            
+
             if (!isAuth) {
                 Swal.fire({
                     title: 'Login Required',

@@ -5,8 +5,15 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\AgentReview;
 use Illuminate\Http\Request;
+<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Schema;
 use Throwable;
+=======
+use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
+>>>>>>> Stashed changes
 
 class HomeController extends Controller
 {
@@ -91,9 +98,13 @@ class HomeController extends Controller
                 $q->where('is_approved', true);
             }
         ])
-        ->whereHas('user', function($q) {
-            $q->where('role', 'agent');
-        });
+        ;
+
+        if (Schema::hasTable('users')) {
+            $query->whereHas('user', function($q) {
+                $q->where('role', 'agent');
+            });
+        }
 
         // Mapping of frontend readable names to DB segment types
         $typeMapping = [
@@ -160,7 +171,7 @@ class HomeController extends Controller
         if ($request->filled('InsuranceCompany') && $request->ServiceType !== 'New Policy') {
             $companyName = $request->InsuranceCompany;
             $insuranceType = $request->InsuranceType;
-            
+
             $query->whereHas('portfolios', function($q) use ($companyName, $insuranceType, $typeMapping) {
                 // If a specific insurance type (segment) is selected, narrow the company search to that segment
                 if ($insuranceType) {
@@ -168,7 +179,7 @@ class HomeController extends Controller
                     $dbTypes = array_map(function($type) use ($typeMapping) {
                         return $typeMapping[$type] ?? strtolower(str_replace(' Insurance', '', $type));
                     }, $types);
-                    
+
                     $q->whereIn('segment_type', $dbTypes);
                 }
 
@@ -191,8 +202,27 @@ class HomeController extends Controller
             });
         }
 
-        $agents = $query->orderBy('created_at', 'desc')->paginate(5);
-        $agents->appends($request->all());
+        try {
+            $agents = $query->orderBy('created_at', 'desc')->paginate(5);
+            $agents->appends($request->all());
+        } catch (QueryException $e) {
+            \Log::error('findAgents query failed', [
+                'message' => $e->getMessage(),
+                'filters' => $request->all(),
+            ]);
+
+            $currentPage = max((int) $request->input('page', 1), 1);
+            $agents = new LengthAwarePaginator(
+                new Collection(),
+                0,
+                5,
+                $currentPage,
+                [
+                    'path' => url()->current(),
+                    'query' => $request->query(),
+                ]
+            );
+        }
 
         // Check if this is specifically a pagination request (infinite scroll/load more)
         if ($request->header('HX-Request') && $request->header('HX-Target') == 'load-more-wrapper') {

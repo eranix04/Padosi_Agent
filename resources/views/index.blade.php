@@ -173,12 +173,12 @@
     @include('layouts.header')
 
     <section class="top-text-section position-relative">
-            <h2 class="banner-top-title">Find <span class="trusted">Trusted & Verified</span> Insurance Experts in your  <span class="padosi">Neighbourhood</span></h2>         
+            <h2 class="banner-top-title">Find <span class="trusted">Trusted & Verified</span> Insurance Experts in your  <span class="padosi">Neighbourhood</span></h2>
         </section>
 
         <!-- Banner -->
         <section class="banner-con position-relative">
-            
+
             <div class="banner-top-text-block">
                 <div class="banner-top-text-box">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-secondary flex-shrink-0" aria-hidden="true" data-lov-id="src/components/HeroCarousel.tsx:162:14" data-lov-name="CheckCircle" data-component-path="src/components/HeroCarousel.tsx" data-component-line="162" data-component-file="HeroCarousel.tsx" data-component-name="CheckCircle" data-component-content="%7B%22className%22%3A%22h-3%20w-3%20sm%3Ah-3.5%20sm%3Aw-3.5%20md%3Ah-4%20md%3Aw-4%20text-secondary%20flex-shrink-0%22%7D"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
@@ -204,7 +204,7 @@
                             <div class="col-lg-6 col-md-12 col-sm-12 col-12 h-banner-left-img responive-banner-img1">
                                 <div class="banner_content" data-aos="fade-up">
                                     <h1 class="text-white">Buy/Port/Renew Insurance</h1>
-                                    <h1 class="text-white text-size-16">Connect with your local PadosiAgent</h1> 
+                                    <h1 class="text-white text-size-16">Connect with your local PadosiAgent</h1>
                                     {{-- <p class="text-white text-size-18">Buy, port, or renew your Health, Life, Motor & SME insurance</p> --}}
                                     <div class="button_wrapper">
                                         <a href="{{ url('/find-agents?ServiceType=New%20Policy') }}" class="text-decoration-none all_button get_started">Find My PadosiAgent</a>
@@ -219,7 +219,7 @@
                                     <figure class="icon banner-icon2 mb-0">
                                         <img src="./img/banner-icon2.png" alt="image" class="img-fluid">
                                     </figure>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -235,18 +235,18 @@
                                     <h1 class="text-white text-size-16">Struggling with your claim? </h1>
                                     {{-- <p class="text-white text-size-18">Get expert help with filing, follow-ups, settlements & disputes</p> --}}
                                     <div class="button_wrapper">
-                                        
+
                                         <a href="{{ url('/find-agents?ServiceType=Claim%20Assistance') }}" class="text-decoration-none all_button get_started">Find Claims Expert</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12 col-12 h-banner-right-img banner-claim-assistance">
                                 <div class="banner_wrapper position-relative">
-                                   
+
                                     <figure class="icon banner-icon2 mb-0">
                                         <img src="./img/banner-icon2.png" alt="image" class="img-fluid">
                                     </figure>
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -262,18 +262,18 @@
                                     <h1 class="text-white text-size-16">Unsure if you're covered?</h1>
                                     {{-- <p class="text-white text-size-18"> Get your free policies audit to find gaps & optimize your coverage</p> --}}
                                     <div class="button_wrapper">
-                                       
+
                                         <a href="{{ url('/find-agents?ServiceType=Policy%20Review') }}" class="text-decoration-none all_button get_started">Find Insurance Expert</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12 col-12 h-banner-right-img banner-policy-review">
                                 <div class="banner_wrapper position-relative">
-                                   
+
                                     <figure class="icon banner-icon2 mb-0">
                                         <img src="./img/banner-icon2.png" alt="image" class="img-fluid">
                                     </figure>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -283,7 +283,7 @@
             </div>
 
         </section>
-    </div>  
+    </div>
 
     <!-- New Policies We Cover -->
     <section class="benefit-con new-policies-section position-relative">
@@ -300,7 +300,7 @@
                     <div class="benefit_wrapper position-relative" data-aos="fade-up">
                         <ul class="list-unstyled mb-0">
                             <li class="beneft-box">
-                                <a href="{{ Auth::check() ? url('/find-agents?ServiceType=New%20Policy&InsuranceType=Health%20Insurance') : route('client.login') }}">
+                                <a href="{{ url('/find-agents?ServiceType=New%20Policy&InsuranceType=Health%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="new-policy" data-service-type="New Policy" data-insurance-type="Health Insurance">
                                     <figure class="icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -321,7 +321,7 @@
                                 </a>
                             </li>
                             <li class="beneft-box">
-                                <a href="{{ Auth::check() ? url('/find-agents?ServiceType=New%20Policy&InsuranceType=Life%20Insurance') : route('client.login') }}">
+                                <a href="{{ url('/find-agents?ServiceType=New%20Policy&InsuranceType=Life%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="new-policy" data-service-type="New Policy" data-insurance-type="Life Insurance">
                                     <figure class="icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -342,7 +342,7 @@
                                 </a>
                             </li>
                             <li class="beneft-box">
-                                <a href="{{ Auth::check() ? url('/find-agents?ServiceType=New%20Policy&InsuranceType=Motor%20Insurance') : route('client.login') }}">
+                                <a href="{{ url('/find-agents?ServiceType=New%20Policy&InsuranceType=Motor%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="new-policy" data-service-type="New Policy" data-insurance-type="Motor Insurance">
                                     <figure class="icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -366,7 +366,7 @@
                                 </a>
                             </li>
                             <li class="beneft-box">
-                                <a href="{{ Auth::check() ? url('/find-agents?ServiceType=New%20Policy&InsuranceType=SME%20Insurance') : route('client.login') }}">
+                                <a href="{{ url('/find-agents?ServiceType=New%20Policy&InsuranceType=SME%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="new-policy" data-service-type="New Policy" data-insurance-type="SME Insurance">
                                     <figure class="icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -418,7 +418,7 @@
                         <div class="benefit_wrapper position-relative" data-aos="fade-up">
                             <ul class="list-unstyled mb-0">
                                 <li class="beneft-box">
-                                    <a href="{{ Auth::check() ? url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=Health%20Insurance') : route('client.login') }}">
+                                    <a href="{{ url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=Health%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="claim-assistance" data-service-type="Claim Assistance" data-insurance-type="Health Insurance">
                                         <figure class="icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -437,7 +437,7 @@
                                     </a>
                                 </li>
                                 <li class="beneft-box">
-                                    <a href="{{ Auth::check() ? url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=Life%20Insurance') : route('client.login') }}">
+                                    <a href="{{ url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=Life%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="claim-assistance" data-service-type="Claim Assistance" data-insurance-type="Life Insurance">
                                         <figure class="icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -456,7 +456,7 @@
                                     </a>
                                 </li>
                                 <li class="beneft-box">
-                                    <a href="{{ Auth::check() ? url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=Motor%20Insurance') : route('client.login') }}">
+                                    <a href="{{ url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=Motor%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="claim-assistance" data-service-type="Claim Assistance" data-insurance-type="Motor Insurance">
                                         <figure class="icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -477,9 +477,9 @@
                                         <h5>Motor Insurance</h5>
                                     </a>
                                 </li>
-                                
+
                                 <li class="beneft-box">
-                                    <a href="{{ Auth::check() ? url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=SME%20Insurance') : route('client.login') }}">
+                                    <a href="{{ url('/find-agents?ServiceType=Claim%20Assistance&InsuranceType=SME%20Insurance') }}" class="js-icon-agent-flow" data-flow-type="claim-assistance" data-service-type="Claim Assistance" data-insurance-type="SME Insurance">
                                          <figure class="icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -521,7 +521,7 @@
                         <!-- <h6>About Us</h6> -->
                         <h2>Do you have multiple Insurance Policies?</h2>
                         <h2 class="text-size-18"><strong>Get your Portfolio Audited by Expert PadosiAgents</strong></h2>
-                        <p class="text text-size-16">PadosiAgent will analyse and identify gaps in your coverage</p>                       
+                        <p class="text text-size-16">PadosiAgent will analyse and identify gaps in your coverage</p>
                     </div>
 
                     <div id="policyreview-slider" class="policieslider" data-aos="fade-up">
@@ -569,7 +569,7 @@
                                 Find Insurance Expert
                             </a>
                         </div>
-                        
+
                     </div>
 
                 </div>
@@ -587,7 +587,7 @@
                     <div class="about_content text-center" data-aos="fade-up">
                         <!-- <h6>About Us</h6> -->
                         <h2>Why Users Trust their PadosiAgent</h2>
-                        <p class="text text-size-16">The safest way to find your insurance PadosiAgent: No Spam, No Fees, just trusted service for you</p>                        
+                        <p class="text text-size-16">The safest way to find your insurance PadosiAgent: No Spam, No Fees, just trusted service for you</p>
                     </div>
 
                     <div class="benefit_wrapper position-relative" data-aos="fade-up">
@@ -609,7 +609,7 @@
                                                 <path d="m9 12 2 2 4-4"></path>
                                             </svg>
                                     </figure>
-                                    <h5>No Spam</h5>                                     
+                                    <h5>No Spam</h5>
                                 </a>
                                 <p>Your privacy protected</p>
                             </li><li class="beneft-box">
@@ -628,7 +628,7 @@
                                                 <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
                                             </svg>
                                     </figure>
-                                    <h5>Data Safe</h5>                                     
+                                    <h5>Data Safe</h5>
                                 </a>
                                 <p>Encrypted & Secure</p>
                             </li>
@@ -637,20 +637,20 @@
                                     <figure class="icon" data-toggle="tooltip" data-placement="top" title="Connect with trusted insurance experts right in your neighborhood.">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-secondary" aria-hidden="true" data-lov-id="src/components/WhyChooseUs.tsx:69:20" data-lov-name="Icon" data-component-path="src/components/WhyChooseUs.tsx" data-component-line="69" data-component-file="WhyChooseUs.tsx" data-component-name="Icon" data-component-content="%7B%7D"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
                                     </figure>
-                                <h5>Nearby</h5>                                     
+                                <h5>Nearby</h5>
                                 </a>
                                <p>In your neighbourhood</p>
-                            </li> 
+                            </li>
                             <li class="beneft-box">
                                 <a href="javascript:void(0);">
                                     <figure class="icon" data-toggle="tooltip" data-placement="top" title="Our platform is completely free to use. No hidden fees or charges.">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-indian-rupee h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-secondary" aria-hidden="true" data-lov-id="src/components/WhyChooseUs.tsx:69:20" data-lov-name="Icon" data-component-path="src/components/WhyChooseUs.tsx" data-component-line="69" data-component-file="WhyChooseUs.tsx" data-component-name="Icon" data-component-content="%7B%7D"><path d="M6 3h12"></path><path d="M6 8h12"></path><path d="m6 13 8.5 8"></path><path d="M6 13h3"></path><path d="M9 13c6.667 0 6.667-10 0-10"></path></svg>
                                     </figure>
-                                    <h5>100% Free</h5>                                     
+                                    <h5>100% Free</h5>
                                 </a>
                                 <p>No charges for you</p>
                             </li>
-                                                      
+
                         </ul>
                     </div>
 
@@ -661,7 +661,7 @@
                             </a>
                         </div>
 
-                   
+
 
                 </div>
             </div>
@@ -698,7 +698,7 @@
                                                 <circle cx="11" cy="11" r="8"></circle>
                                             </svg>
                                     </figure>
-                                    <h5>Search</h5>                                     
+                                    <h5>Search</h5>
                                 </a>
                                <p>Find verified agents</p>
                             </li>
@@ -719,7 +719,7 @@
                                                 <path d="M11 18H8a2 2 0 0 1-2-2V9"></path>
                                             </svg>
                                     </figure>
-                                    <h5>Compare</h5>                                     
+                                    <h5>Compare</h5>
                                 </a>
                                <p>Review ratings</p>
                             </li>
@@ -739,7 +739,7 @@
                                                 </path>
                                             </svg>
                                     </figure>
-                                    <h5>Connect</h5>                                     
+                                    <h5>Connect</h5>
                                 </a>
                                <p>Call or WhatsApp</p>
                             </li>
@@ -764,7 +764,7 @@
                                                 </path>
                                             </svg>
                                     </figure>
-                                    <h5>Assist Me</h5>                                     
+                                    <h5>Assist Me</h5>
                                 </a>
                               <p>Personalized service</p>
                             </li>
@@ -781,7 +781,7 @@
                 </div>
             </div>
         </div>
-    </section>   
+    </section>
     <!-- Testimonial -->
     <section class="testimonial-con position-relative">
         <div class="container">
@@ -789,7 +789,7 @@
                 <div class="col-12">
                     <div class="testimonial_content text-center" data-aos="fade-up">
                         <h2>What Users like you say about their PadosiAgent</h2>
-                         <p class="text text-size-16">Real experiences from users who found their PadosiAgent for policies, claims & reviews</p>  
+                         <p class="text text-size-16">Real experiences from users who found their PadosiAgent for policies, claims & reviews</p>
                     </div>
                 </div>
                 <div class="col-xl-10 col-12 mx-auto position-relative">
@@ -850,7 +850,7 @@
                     console.error('jQuery is not defined during initHomeSliders');
                     return;
                 }
-                
+
                 if (!$.fn.owlCarousel) {
                     console.error('Owl Carousel plugin is not loaded');
                     return;
@@ -898,7 +898,7 @@
             if (typeof $ !== 'undefined' && $.fn.tooltip) {
                 // Destroy existing tooltips before re-initializing to avoid duplication or stucky behavior
                 $('[data-toggle="tooltip"]').tooltip('dispose');
-                
+
                 // Initialize tooltips with 'click hover focus' trigger
                 $('[data-toggle="tooltip"]').tooltip({
                     trigger: 'click hover focus'
@@ -917,7 +917,7 @@
                 });
             }
         }
-        
+
         // Remove tooltips completely before navigating away to avoid them sticking on the next page
         window.addEventListener('beforeunload', function() {
             if (typeof $ !== 'undefined') {
@@ -950,13 +950,13 @@
             initHomeSliders();
             initTooltips();
         }, 100);
-        
+
         // Re-init on HTMX load event
         document.addEventListener('htmx:afterSettle', function(evt) {
             initHomeSliders();
             initTooltips();
         });
-        
+
         // Also refresh AOS on settle
         document.addEventListener('htmx:afterSettle', function(evt) {
             if (typeof AOS !== 'undefined') {
