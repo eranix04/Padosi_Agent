@@ -1,5 +1,173 @@
 @extends('layouts.app')
 
+@push('styles')
+<style>
+    .testimonial-con {
+        padding: 95px 0 120px;
+        background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    }
+
+    .testimonial-con .testimonial_content h2 {
+        margin-bottom: 14px;
+        letter-spacing: -0.02em;
+    }
+
+    .testimonial-con .testimonial_content .text {
+        max-width: 760px;
+        margin: 0 auto 28px;
+    }
+
+    .testimonial-con .testimonial_carousel {
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    .testimonial-con .carousel-inner {
+        width: 100%;
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    .testimonial-con .testimonial-box {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 22px;
+        padding: 34px 38px 30px;
+        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+    }
+
+    .testimonial-con .testimonial-box::before {
+        content: "\201C";
+        position: absolute;
+        top: 12px;
+        left: 24px;
+        font-size: 62px;
+        line-height: 1;
+        color: rgba(37, 99, 235, 0.12);
+        font-family: Georgia, serif;
+        pointer-events: none;
+    }
+
+    .testimonial-con .testimonial-box ul {
+        margin-bottom: 20px;
+    }
+
+    .testimonial-con .testimonial-box p {
+        margin-bottom: 24px;
+        font-size: 30px;
+        line-height: 1.7;
+    }
+
+    .testimonial-con .testimonial-box .testimonial-avatar {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 14px;
+        border-radius: 999px;
+        overflow: hidden;
+        border: 3px solid #ffffff;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
+    }
+
+    .testimonial-con .testimonial-box .testimonial-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .testimonial-con .testimonial-box .lower_content {
+        margin-bottom: 0;
+        display: inline-flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .testimonial-con .testimonial-box .review {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        line-height: 1.2;
+        font-weight: 600;
+        color: #1d4ed8;
+        background: #e8f0ff;
+    }
+
+    .testimonial-con .carousel-indicators {
+        margin: 16px 0 0;
+        position: static;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .testimonial-con .carousel-indicators li {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        margin: 0;
+        border: 0;
+        background: #cbd5e1;
+        opacity: 1;
+        transition: all 0.2s ease;
+    }
+
+    .testimonial-con .carousel-indicators li.active {
+        width: 28px;
+        background: #2563eb;
+    }
+
+    @media screen and (max-width: 991px) {
+        .testimonial-con {
+            padding: 64px 0 78px;
+        }
+
+        .testimonial-con .testimonial_content h2 {
+            margin-bottom: 10px;
+        }
+
+        .testimonial-con .testimonial_content .text {
+            margin-bottom: 18px;
+            font-size: 17px;
+            line-height: 1.45;
+        }
+
+        .testimonial-con .testimonial-box {
+            border-radius: 16px;
+            padding: 24px 18px 22px;
+        }
+
+        .testimonial-con .testimonial-box::before {
+            top: 8px;
+            left: 14px;
+            font-size: 48px;
+        }
+
+        .testimonial-con .testimonial-box p {
+            font-size: 17px;
+            line-height: 1.55;
+            margin-bottom: 18px;
+        }
+
+        .testimonial-con .testimonial-box .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-con .testimonial-box .name {
+            font-size: 20px;
+            line-height: 1.25;
+        }
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="family_banner_outer home-page-banner position-relative">
     @include('layouts.header')
@@ -628,196 +796,46 @@
                     {{-- <figure class="testimonial-sideimage mb-0" data-aos="fade-up">
                         <img src="./img/testimonial-sideimage.png" alt="image" class="img-fluid">
                     </figure> --}}
+                    @php
+                        $avatarImages = [
+                            asset('img/testimonial-personimage1.jpg'),
+                            asset('img/testimonial-personimage2.jpg'),
+                            asset('img/testimonial-personimage3.jpg'),
+                            asset('img/testimonial-personimage4.jpg'),
+                        ];
+                    @endphp
                     <div id="testimonialcarousel" class="carousel slide" data-ride="carousel" data-aos="fade-up">
                         <div class="testimonial_carousel text-center position-relative">
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="testimonial-box">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                        </ul>
-                                        <p class="paragarph text-size-18">"Found the perfect health insurance through
-                                            PadosiAgent. The agent was professional and explained everything clearly."
-                                        </p>
-                                        <div class="lower_content">
-                                            <span class="name">Sneha Patel</span>
-                                            <span class="review">Policy Purchase</span>
+                                @foreach(($testimonials ?? []) as $index => $testimonial)
+                                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                        <div class="testimonial-box">
+                                            <ul class="list-unstyled">
+                                                @for ($star = 1; $star <= 5; $star++)
+                                                    <li>
+                                                        <i class="fa-solid fa-star" style="opacity: {{ $star <= ($testimonial['rating'] ?? 5) ? '1' : '0.35' }};"></i>
+                                                    </li>
+                                                @endfor
+                                            </ul>
+                                            <p class="paragarph text-size-18">"{{ $testimonial['review'] ?? '' }}"</p>
+                                            <div class="lower_content">
+                                                <figure class="testimonial-avatar mb-0">
+                                                    <img src="{{ $avatarImages[$index % count($avatarImages)] }}" alt="{{ $testimonial['name'] ?? 'User' }}">
+                                                </figure>
+                                                <span class="name">{{ $testimonial['name'] ?? 'Verified User' }}</span>
+                                                <span class="review">{{ $testimonial['service'] ?? 'Verified Review' }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="testimonial-box">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                        </ul>
-                                        <p class="paragarph text-size-18">“My claim was rejected initially, but the
-                                            agent from PadosiAgent helped me get it approved. Highly recommended!"
-                                        </p>
-                                        <div class="lower_content">
-                                            <span class="name">Rahul Verma</span>
-                                            <span class="review">Claim Assistance</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="testimonial-box">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                        </ul>
-                                        <p class="paragarph text-size-18">"Got my policy reviewed and discovered I was
-                                            overpaying. Saved ₹15,000 annually. Thank you PadosiAgent!"
-
-
-                                        </p>
-                                        <div class="lower_content">
-                                            <span class="name">Anjali Desai
-                                            </span>
-                                            <span class="review">Policy Review
-
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="testimonial-box">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                        </ul>
-                                        <p class="paragarph text-size-18">"Bought term insurance for my family. The
-                                            agent was patient and helped me understand all the terms."
-
-
-                                        </p>
-                                        <div class="lower_content">
-                                            <span class="name">Vikram Singh
-                                            </span>
-                                            <span class="review">Policy Purchase
-
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="testimonial-box">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                        </ul>
-                                        <p class="paragarph text-size-18">"Medical claim process was smooth thanks to my
-                                            PadosiAgent. They handled all the documentation."</p>
-                                        <div class="lower_content">
-                                            <span class="name">Priya Iyer</span>
-                                            <span class="review">Claim Assistance</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="testimonial-box">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                        </ul>
-                                        <p class="paragarph text-size-18">"Professional service. The agent reviewed all
-                                            my policies and suggested better coverage options."
-
-                                        </p>
-                                        <div class="lower_content">
-                                            <span class="name">Amit Kapoor</span>
-                                            <span class="review">Policy Review</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="testimonial-box">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                            <li><i class="fa-solid fa-star"></i></li>
-                                        </ul>
-                                        <p class="paragarph text-size-18">"First time buying insurance and the agent
-                                            made it so easy. No spam calls, just genuine help."
-
-
-
-                                        </p>
-                                        <div class="lower_content">
-                                            <span class="name">Neha Gupta
-                                            </span>
-                                            <span class="review">Policy Review</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <!-- Indicators -->
-                        {{-- <ul class="carousel-indicators">
-                            <li data-target="#testimonialcarousel" data-slide-to="0" class="active">
-                                <figure class="mb-0 image1">
-                                    <img src="./img/testimonial-personimage1.jpg" alt="image"
-                                        class="img-fluid invert_effect">
-                                </figure>
-                            </li>
-                            <li data-target="#testimonialcarousel" data-slide-to="1">
-                                <figure class="mb-0 image2">
-                                    <img src="./img/testimonial-personimage2.jpg" alt="image"
-                                        class="img-fluid invert_effect">
-                                </figure>
-                            </li>
-                            <li data-target="#testimonialcarousel" data-slide-to="2">
-                                <figure class="mb-0 image3">
-                                    <img src="./img/testimonial-personimage3.jpg" alt="image"
-                                        class="img-fluid invert_effect">
-                                </figure>
-                            </li>
-                            <li data-target="#testimonialcarousel" data-slide-to="3">
-                                <figure class="mb-0 image4">
-                                    <img src="./img/testimonial-personimage4.jpg" alt="image"
-                                        class="img-fluid invert_effect">
-                                </figure>
-                            </li>
-                            <li data-target="#testimonialcarousel" data-slide-to="4">
-                                <figure class="mb-0 image5">
-                                    <img src="./img/testimonial-personimage4.jpg" alt="image"
-                                        class="img-fluid invert_effect">
-                                </figure>
-                            </li>
-                            <li data-target="#testimonialcarousel" data-slide-to="5">
-                                <figure class="mb-0 image6">
-                                    <img src="./img/testimonial-personimage4.jpg" alt="image"
-                                        class="img-fluid invert_effect">
-                                </figure>
-                            </li>
-                            <li data-target="#testimonialcarousel" data-slide-to="6">
-                                <figure class="mb-0 image7">
-                                    <img src="./img/testimonial-personimage4.jpg" alt="image"
-                                        class="img-fluid invert_effect">
-                                </figure>
-                            </li>
-                        </ul> --}}
+                        <ul class="carousel-indicators">
+                            @foreach(($testimonials ?? []) as $index => $testimonial)
+                                <li data-target="#testimonialcarousel" data-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"></li>
+                            @endforeach
+                        </ul>
 
                     </div>
                 </div>
@@ -860,7 +878,13 @@
 
                 // Initialize Bootstrap carousel for testimonial
                 if (typeof $ !== 'undefined' && $.fn.carousel) {
-                    $('#testimonialcarousel').carousel();
+                    $('#testimonialcarousel').carousel({
+                        interval: 3200,
+                        ride: 'carousel',
+                        pause: false,
+                        wrap: true,
+                        touch: true
+                    });
                 }
 
                 // Initialize tooltips

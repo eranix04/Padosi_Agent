@@ -9,7 +9,7 @@
             <div class="login-header">
                 <img src="{{ asset('img/logo-icon.png') }}" alt="PadosiAgent Logo" style="height: 60px; margin-bottom: 24px;">
                 <h1>{{ $type === 'client' ? 'Client' : 'Agent' }} Forgot Password</h1>
-                <p>Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
+                <!-- <p>Reset Password.</p> -->
             </div>
 
             <div id="alert-container">

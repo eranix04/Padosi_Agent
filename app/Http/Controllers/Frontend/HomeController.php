@@ -3,13 +3,71 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AgentReview;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Throwable;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $reviews = collect();
+
+        try {
+            if (Schema::hasTable('agent_reviews')) {
+                $reviews = AgentReview::query()
+                    ->with(['user:id,fullname', 'agent:id'])
+                    ->where('is_approved', true)
+                    ->whereNotNull('review')
+                    ->latest()
+                    ->take(7)
+                    ->get();
+            }
+        } catch (Throwable $e) {
+            // Keep homepage functional even if DB is unavailable in local/staging env.
+            $reviews = collect();
+        }
+
+        $fallbackTestimonials = [
+            [
+                'name' => 'Sneha Patel',
+                'service' => 'Policy Purchase',
+                'review' => 'Found the perfect health insurance through PadosiAgent. The agent was professional and explained everything clearly.',
+                'rating' => 5,
+            ],
+            [
+                'name' => 'Rahul Verma',
+                'service' => 'Claim Assistance',
+                'review' => 'My claim was rejected initially, but the agent from PadosiAgent helped me get it approved. Highly recommended!',
+                'rating' => 5,
+            ],
+            [
+                'name' => 'Anjali Desai',
+                'service' => 'Policy Review',
+                'review' => 'Got my policy reviewed and discovered I was overpaying. Saved annual premium significantly. Thank you PadosiAgent!',
+                'rating' => 5,
+            ],
+            [
+                'name' => 'Vikram Singh',
+                'service' => 'Policy Purchase',
+                'review' => 'Bought term insurance for my family. The agent was patient and helped me understand all the terms.',
+                'rating' => 5,
+            ],
+        ];
+
+        $testimonials = $reviews->isNotEmpty()
+            ? $reviews->map(function (AgentReview $review) {
+                return [
+                    'name' => $review->user->fullname ?? 'Verified User',
+                    'service' => 'Verified Review',
+                    'review' => trim((string) $review->review),
+                    'rating' => max(1, min(5, (int) round($review->rating ?: 5))),
+                ];
+            })->values()->all()
+            : $fallbackTestimonials;
+
+        return view('index', compact('testimonials'));
     }
 
     public function about()

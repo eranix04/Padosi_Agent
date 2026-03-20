@@ -12,6 +12,10 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="mobile-drawer-header d-lg-none">
+                    <h6>Navigation</h6>
+                    <p>Quick access to important pages</p>
+                </div>
                 <ul class="navbar-nav mx-auto">
                     @guest
                         {{-- Public menu items - only shown when not logged in --}}
@@ -64,7 +68,7 @@
                         <li class="nav-item d-lg-none">
                             <form action="{{ route('logout') }}" method="POST" id="logout-form-mobile" class="m-0">
                                 @csrf
-                                <button type="submit" class="nav-link text-danger border-0 bg-transparent w-100 text-left">
+                                <button type="submit" class="nav-link text-danger border-0 bg-transparent w-100 text-right">
                                     <i class="fas fa-sign-out-alt mr-2"></i>Sign Out
                                 </button>
                             </form>

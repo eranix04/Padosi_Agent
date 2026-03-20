@@ -119,6 +119,114 @@
         .banner-top-text-box {
             pointer-events: auto;
         }
+
+        @media screen and (max-width: 991px) {
+            body.mobile-nav-open {
+                overflow: hidden;
+            }
+
+            .mobile-nav-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.4);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s ease;
+                z-index: 1065;
+            }
+
+            body.mobile-nav-open .mobile-nav-overlay {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .header .navbar-collapse {
+                position: fixed !important;
+                top: 0 !important;
+                right: 0 !important;
+                left: auto !important;
+                width: min(86vw, 360px) !important;
+                max-height: 100vh;
+                height: 100vh;
+                overflow-y: auto;
+                border-radius: 0 !important;
+                background: linear-gradient(180deg, #ffffff 0%, #f7fafc 100%);
+                box-shadow: -8px 0 28px rgb(0 0 0 / 28%);
+                transform: translateX(105%);
+                transition: transform 0.25s ease, visibility 0.25s ease;
+                visibility: hidden;
+                pointer-events: none;
+                z-index: 1070;
+                padding: 76px 14px 18px;
+            }
+
+            .header .navbar-collapse.collapse {
+                display: block !important;
+            }
+
+            .header .navbar-collapse.show {
+                transform: translateX(0);
+                visibility: visible;
+                pointer-events: auto;
+            }
+
+            .header .navbar-collapse ul {
+                text-align: left !important;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin: 0 !important;
+                width: 100%;
+            }
+
+            .header .navbar-nav .nav-item a,
+            .header .navbar-nav .nav-item button.nav-link {
+                text-align: left !important;
+                font-size: 20px !important;
+                line-height: 1.35 !important;
+                font-weight: 600;
+                padding: 14px 16px !important;
+                border-radius: 12px;
+                background: #ffffff;
+                box-shadow: 0 1px 0 rgb(15 23 42 / 5%);
+            }
+
+            .header .navbar-nav .nav-item {
+                border-bottom: 0 !important;
+                width: 100%;
+            }
+
+            .header .navbar-nav .nav-item a i,
+            .header .navbar-nav .nav-item button.nav-link i {
+                margin-right: 10px !important;
+            }
+
+            .header .navbar-nav .nav-item a:hover,
+            .header .navbar-nav .active > a {
+                border-radius: 12px !important;
+            }
+
+            .header .mobile-drawer-header {
+                padding: 0 4px 14px;
+                margin-bottom: 8px;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .header .mobile-drawer-header h6 {
+                margin: 0;
+                font-size: 18px;
+                line-height: 1.2;
+                color: #0f172a;
+                font-weight: 700;
+            }
+
+            .header .mobile-drawer-header p {
+                margin: 6px 0 0;
+                font-size: 13px;
+                line-height: 1.4;
+                color: #64748b;
+            }
+        }
     </style>
 </head>
 
@@ -162,6 +270,8 @@
             @include('layouts.footer')
         @endif
     </div>
+
+    <div class="mobile-nav-overlay"></div>
 
     <!-- PRE LOADER -->
     <div class="loader-mask">
@@ -245,6 +355,37 @@
                 passwordField.attr('type', type);
                 $(this).toggleClass('fa-eye fa-eye-slash');
             }
+        });
+
+        // Mobile right drawer navigation behavior
+        $(function() {
+            const $mobileNav = $('#navbarSupportedContent');
+            const $overlay = $('.mobile-nav-overlay');
+
+            function syncMobileNavState() {
+                if (window.innerWidth <= 991 && $mobileNav.hasClass('show')) {
+                    $('body').addClass('mobile-nav-open');
+                } else {
+                    $('body').removeClass('mobile-nav-open');
+                }
+            }
+
+            $mobileNav.on('shown.bs.collapse hidden.bs.collapse', syncMobileNavState);
+
+            $overlay.on('click', function() {
+                if (window.innerWidth <= 991) {
+                    $mobileNav.collapse('hide');
+                }
+            });
+
+            $(document).on('click', '#navbarSupportedContent .nav-link', function() {
+                if (window.innerWidth <= 991) {
+                    $mobileNav.collapse('hide');
+                }
+            });
+
+            $(window).on('resize', syncMobileNavState);
+            syncMobileNavState();
         });
 
         // Inline Loading for "View Profile" buttons
